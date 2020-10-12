@@ -1,0 +1,3 @@
+const cars = [
+    {color:"Black",plate:"37-29188",type:"Toyota",engine:"2500cc",model:"Camry",year:"2014"},{color:"Red",plate:"21-23332",type:"Mercedes",engine:"4500cc",model:"CLA",year:"2018"},{color:"Silver",plate:"33-11283",type:"Ford",engine:"2000cc",model:"Fusion",year:"2019"},{color:"Metallic black",plate:"14-44323",type:"Chevrollet",engine:"5000cc",model:"Camaro",year:"2020"}]
+    module.exports = {cars}
