@@ -18,11 +18,11 @@ const register = async (user)=>{
 }
 const login = async (user)=>{
     const savedUser = users.filter((element)=>{
-        return element === user.email
+        return element.email === user.email
     })
     if(savedUser.length){
         if(await bcrypt.compare(user.password,savedUser[0].password)){
-            const permessions = roles.
+            
         }
         
     }
