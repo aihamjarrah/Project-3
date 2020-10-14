@@ -27,3 +27,7 @@ const login = async (user)=>{
         
     }
 }
+const getCars = ()=>{
+    return cars
+}
+module.exports = {register,login,getCars}
