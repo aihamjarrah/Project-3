@@ -1,8 +1,9 @@
 const express = require("express")
-const {register,login,getCars}= require("./controller")
+const {register,login,getCars,getUsers}= require("./controller")
 const {cars,users,roles} = require("./models")
 const middleWares = require("./middlewares")
 const bcrypt = require("bcrypt")
+const { request } = require("express")
 // console.log(bcrypt.hash("asde_212",process.env.salt))
 
 const authRouter = express.Router()
@@ -37,6 +38,19 @@ authRouter.get("/login",async (req,res)=>{
     }
 
     
+})
+authRouter.post("/add-user",async (req,res)=>{
+    try {
+        res.json(await register(req.body))
+    } catch (err) {
+        throw err
+        
+    }
+})
+authRouter.get("/users",async (req,res)=>{
+    console.log("Get all the users")
+    res.json(await getUsers())
+
 })
 
 
