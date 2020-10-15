@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const {cars,users,roles} = require("./models")
-const { options } = require("./routes")
+// const { options } = require("./routes")
 // bcrypt.hash("osp_98ppd",10,(err,hash)=>{
 //     if (err) throw err
 //     console.log(hash)
@@ -26,11 +26,11 @@ const login = async (user)=>{
             const userPer = roles.filter((role)=>{
                 return role.id === savedUser[0].role_id
             })
-            const payLoad = {email:savedUser[0].email,permession:userPer[0].permessions}
+            const payload = {email:savedUser[0].email,permession:userPer[0].permessions}
             const options = {expiresIn:process.env.token_expiration}
-            
+            return  await jwt.sign(payload,process.env.secret,options)
         }
-        return jwt.sign(payLoad,process.env.secret,options)
+        
         
     }
     return "invalid login"
