@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const {cars,users,roles} = require("./models")
-// const { options } = require("./routes")
-// bcrypt.hash("osp_98ppd",10,(err,hash)=>{
+const { options } = require("./routes")
+// bcrypt.hash("iunq_331o",10,(err,hash)=>{
 //     if (err) throw err
 //     console.log(hash)
 // }) 
