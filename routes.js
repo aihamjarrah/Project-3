@@ -1,30 +1,31 @@
 const express = require("express")
-const {register,login,getCars,getUsers}= require("./controller")
+const {carModel,userModel} = require("./schema")
+const {register,login,getCars,getUsers,addCar,findCar}= require("./controller")
 // const {cars,users,roles} = require("./models")
 const middleWare = require("./middlewares")
 const bcrypt = require("bcrypt")
-const { request } = require("express")
-const {carModel,userModel} = require("./db")
-// console.log(bcrypt.hash("asde_212",process.env.salt))
+const request  = require("express")
 
-const authRouter = express.Router()
+const router = express.Router()
+
 const car = new carModel({
-    color
+    color:"Black",
+
 })
 
 
-authRouter.get("/",async (req,res,next)=>{
+router.get("/",async (req,res,next)=>{
     console.log("Test")
     res.json("Welcome")
     
 })
 
-authRouter.get("/cars",(req,res)=>{
+router.get("/cars",(req,res)=>{
     console.log("Get All The cars")
     res.json(getCars())
     
 })
-authRouter.get("/car-color",(req,res)=>{
+router.get("/car-color",(req,res)=>{
     const carColor = cars.filter((car)=>{
         return car.color === req.body.color
     })
@@ -33,7 +34,7 @@ authRouter.get("/car-color",(req,res)=>{
     }
     res.json(carColor)
 })
-authRouter.get("/login",async (req,res)=>{
+router.get("/login",async (req,res)=>{
     try {
         res.json(await login(req.body))
     } catch (err) {
@@ -43,7 +44,7 @@ authRouter.get("/login",async (req,res)=>{
 
     
 })
-authRouter.post("/register",async (req,res)=>{
+router.post("/register",async (req,res)=>{
     try {
         res.json(await register(req.body))
     } catch (err) {
@@ -51,11 +52,16 @@ authRouter.post("/register",async (req,res)=>{
         
     }
 })
-authRouter.get("/users",middleWare,async (req,res)=>{
+router.get("/users",middleWare,async (req,res)=>{
     res.json(await getUsers())
 
 })
+router.post("/add-car",middleWare,async (req,res)=>{
+    res.json(await addCar(req.body.color,req.body.plate,req.body.type,req.body.engine,req.body.model,req.body.year))
+})
+router.get("/find-car-plate",async (req,res)=>{
+    res.json(await findCar(req.body.plate))
+})
 
 
-
-module.exports = authRouter
+module.exports = router

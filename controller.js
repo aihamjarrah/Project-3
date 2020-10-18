@@ -1,7 +1,10 @@
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
-const {cars,users,roles} = require("./models")
+// const {cars,users,roles} = require("./models")
 const { options } = require("./routes")
+const { carModel,userModel } = require("./schema")
+require("dotenv").config()
+const db = require("./db")
 // bcrypt.hash("iunq_331o",10,(err,hash)=>{
 //     if (err) throw err
 //     console.log(hash)
@@ -36,9 +39,45 @@ const login = async (user)=>{
     return "invalid login"
 }
 const getCars = ()=>{
-    return cars
+    return db.car
 }
 const getUsers = ()=>{
     return users
 }
-module.exports = {register,login,getCars,getUsers}
+const addCar = (color,plate,type,engine,model,year)=>{
+    const car = new carModel({
+        color:color,
+        plate:plate,
+        type:type,
+        engine:engine,
+        model:model,
+        year:year
+    
+    
+    })
+    car
+      .save()
+      .then((result)=>{
+          console.log("Result",result)
+          return result
+          
+      })
+      .catch((err)=>{
+          console.error(err)
+      })
+}
+const findCar = async (plateNumber)=>{
+    return await carModel
+       .find({
+           plate:plateNumber
+       })
+    //    .then((result)=>{
+    //        console.log("Result:",result)
+    //        return result
+    //    })
+    //    .catch((err)=>{
+    //        console.error(err)
+    //    })
+    
+}
+module.exports = {register,login,getCars,getUsers,addCar,findCar}
