@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 // const { options, use } = require("./routes")
 const { carModel,userModel,permessions } = require("./schema")
-// require("dotenv").config()
+require("dotenv").config()
 // const db = require("./db")
 // bcrypt.hash("iunq_331o",10,(err,hash)=>{
 //     if (err) throw err
@@ -11,12 +11,25 @@ const { carModel,userModel,permessions } = require("./schema")
 
 const register =async (information)=>{
     try {
-        const newUser = new userModel({
-            email:information.email,
-            password:information.password,
-            name:information.name,
-            phoneNumber:information.phoneNumber
-        })
+        if(information.Key === process.env.adminKey){
+            const newUser = new userModel({
+                email:information.email,
+                password:information.password,
+                name:information.name,
+                phoneNumber:information.phoneNumber,
+                role:"admin"
+            })
+
+        }else{
+            const newUser = new userModel({
+                email:information.email,
+                password:information.password,
+                name:information.name,
+                phoneNumber:information.phoneNumber,
+                role:"user"
+            })
+
+        }
         newUser
                  .save()
                  .then((result)=>{
@@ -33,23 +46,25 @@ const register =async (information)=>{
     }
 }
 const login =async (loginInfo)=>{
-    const searchUser = userModel.find({email:loginInfo.email})
+    const searchUser =await userModel.findOne({email:loginInfo.email})
     if(searchUser){
-        const checkPass = await bcrypt.compare(loginInfo.password,searchUser.password,(err,result)=>{
-            try {
-                console.log("Password matched")
-                return 
+        console.log(searchUser)
+        if(await bcrypt.compare(loginInfo.password,searchUser.password,(err,result)=>{
+            if(err) throw err
+            console.log("Password matches :",result)
+        })){
+            if(searchUser.role === "admin"){
+                const payLoad = {permessions:permessions[0].admin,email:searchUser.email}
+                const options = {expiresIn:process.env.token_expiration}
+                return jwt.sign(payLoad,process.env.secret,options)
 
-            } catch (err) {
-                console.error(err)
-                
+            }else{
+                const payLoad = {permessions:permessions[0].user,email:searchUser.email}
+                const options = {expiresIn:process.env.token_expiration}
+                return jwt.sign(payLoad,process.env.secret,options)
+
             }
-        })
-        console.log(checkPass)
-        if(checkPass){
-            const payLoad = {permessions:permessions[0].user,email:searchUser.email}
-            const options = {expiresIn:process.env.token_expiration}
-            return jwt.sign(payLoad,process.env.secret,options)
+            
             
                 
             

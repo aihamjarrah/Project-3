@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     phoneNumber:{type:String}
 })
 userSchema.pre("save",async function(){
-    this.password = await bcrypt.hash(this.password,process.env.salt)
+    this.password = await bcrypt.hash(this.password,10)
 })
 const permessions = {admin:["r","w","u","d"],user:["r","w"]}
 const carModel = mongoose.model("Cars",carSchema)
