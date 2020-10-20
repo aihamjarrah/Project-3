@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
-// const {cars,users,roles} = require("./models")
-const { options, use } = require("./routes")
+// const { options, use } = require("./routes")
 const { carModel,userModel,permessions } = require("./schema")
 // require("dotenv").config()
 // const db = require("./db")
@@ -9,35 +8,7 @@ const { carModel,userModel,permessions } = require("./schema")
 //     if (err) throw err
 //     console.log(hash)
 // }) 
-// const register = async (user)=>{
-//     const searchUser = users.filter((element)=>{
-//         return element.email === user.email
-//     })
-//     if(!searchUser.length){
-//         user.password = await bcrypt.hash(user.password,Number(process.env.salt))
-//         users.push(user)
-//         return "User has been created"
-//     }
-//     return "User exists"
-// }
-// const login = async (user)=>{
-//     const savedUser = users.filter((element)=>{
-//         return element.email === user.email
-//     })
-//     if(savedUser.length){
-//         if(await bcrypt.compare(user.password,savedUser[0].password)){
-//             const userPer = roles.filter((role)=>{
-//                 return role.id === savedUser[0].role_id
-//             })
-//             const payload = {email:savedUser[0].email,permession:userPer[0].permessions}
-//             const options = {expiresIn:process.env.token_expiration}
-//             return  await jwt.sign(payload,process.env.secret,options)
-//         }
-        
-        
-//     }
-//     return "invalid login"
-// }
+
 const register =async (information)=>{
     try {
         const newUser = new userModel({
@@ -46,15 +17,7 @@ const register =async (information)=>{
             name:information.name,
             phoneNumber:information.phoneNumber
         })
-        console.log(newUser)
-        
-        userModel.pre("save",async function(){
-            this.password = await bcrypt.hash(this.password,process.env.salt)
-            if(information.accessKey === process.env.secret){
-                newUser.role = "admin"
-            }
-        })
-        userModel
+        newUser
                  .save()
                  .then((result)=>{
                      console.log(result)
@@ -72,12 +35,37 @@ const register =async (information)=>{
 const login =async (loginInfo)=>{
     const searchUser = userModel.find({email:loginInfo.email})
     if(searchUser){
-        const checkPass = await bcrypt.compare(loginInfo.password,searchUser.password,process.env.salt)
+        const checkPass = await bcrypt.compare(loginInfo.password,searchUser.password,(err,result)=>{
+            try {
+                console.log("Password matched")
+                return 
+
+            } catch (err) {
+                console.error(err)
+                
+            }
+        })
+        console.log(checkPass)
         if(checkPass){
-            const payload = {}
+            const payLoad = {permessions:permessions[0].user,email:searchUser.email}
+            const options = {expiresIn:process.env.token_expiration}
+            return jwt.sign(payLoad,process.env.secret,options)
+            
+                
+            
+            
+        }
+        else{
+            return "Invalid password"
         }
         
+
+        
     }
+    else{
+        return "User is not registerd"
+    }
+    
 }
 const getCars = ()=>{
     return db.car
@@ -112,13 +100,5 @@ const findCar = async (plateNumber)=>{
        .find({
            plate:plateNumber
        })
-    //    .then((result)=>{
-    //        console.log("Result:",result)
-    //        return result
-    //    })
-    //    .catch((err)=>{
-    //        console.error(err)
-    //    })
-    
 }
 module.exports = {register,login,getCars,getUsers,addCar,findCar}
