@@ -5,15 +5,7 @@ const {register,login,getCars,getUsers,addCar,findCar}= require("./controller")
 const middleWare = require("./middlewares")
 const bcrypt = require("bcrypt")
 const request  = require("express")
-
 const router = express.Router()
-
-const car = new carModel({
-    color:"Black",
-
-})
-
-
 router.get("/",async (req,res,next)=>{
     console.log("Test")
     res.json("Welcome")

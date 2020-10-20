@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
     name:{type:String,required:true},
     phoneNumber:{type:String}
 })
-
+const permessions = {admin:["r","w","u","d"],user:["r","w"]}
 const carModel = mongoose.model("Cars",carSchema)
 const userModel = mongoose.model("User",userSchema)
-module.exports = {carModel,userModel}
+module.exports = {carModel,userModel,permessions}
