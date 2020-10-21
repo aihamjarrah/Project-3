@@ -1,21 +1,19 @@
 const express = require("express")
 const {carModel,userModel} = require("./schema")
 const {register,login,getCars,getUsers,addCar,findCar}= require("./controller")
-// const {cars,users,roles} = require("./models")
 const middleWare = require("./middlewares")
 const bcrypt = require("bcrypt")
 const request  = require("express")
 const router = express.Router()
-router.get("/",async (req,res,next)=>{
+router.get("/",async (req,res)=>{
     console.log("Test")
     res.json("Welcome")
     
 })
 
-router.get("/cars",(req,res)=>{
-    console.log("Get All The cars")
-    res.json(getCars())
-    
+router.get("/cars",async(req,res)=>{
+    console.log("All The cars")
+    res.json(await getCars())
 })
 router.get("/car-color",(req,res)=>{
     const carColor = cars.filter((car)=>{
