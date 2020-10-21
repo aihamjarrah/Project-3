@@ -58,13 +58,13 @@ const login =async (loginInfo)=>{
                 console.log("test")
                 const payLoad = {permession:permessions.admin,email:searchUser.email}
                 const options = {expiresIn:process.env.token_expiration}
-                return jwt.sign(payLoad,process.env.secret,options)
+                return await jwt.sign(payLoad,process.env.secret,options)
 
             }else{
                 console.log("test2")
                 const payLoad = {permession:permessions.user,email:searchUser.email}
                 const options = {expiresIn:process.env.token_expiration}
-                return jwt.sign(payLoad,process.env.secret,options)
+                return await jwt.sign(payLoad,process.env.secret,options)
 
             }  
         }
@@ -82,6 +82,7 @@ const getCars = ()=>{
     return db.car
 }
 const getUsers = ()=>{
+    return userModel
     
 }
 const addCar = (color,plate,type,engine,model,year)=>{
