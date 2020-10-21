@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const Mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const { carModel, userModel, permessions } = require("./schema");
+const { options } = require("./routes");
 
 require("dotenv").config();
 const register = async (information) => {
@@ -87,6 +88,16 @@ const getCars = async function () {
   return await carModel.find({});
 };
 // console.log("AAAA", getCars());
+const updateCarModel = async (data) => {
+  await carModel.update(  
+    { U: data.oldData },
+    { New: data.newData },
+    (err, result) => {
+      if (err) throw err;
+      console.log("Update result :", result);
+    }
+  );
+};
 
 const getUsers = () => {
   return userModel.find({});
@@ -115,4 +126,4 @@ const findCar = async (plateNumber) => {
     plate: plateNumber,
   });
 };
-module.exports = { register, login, getCars, getUsers, addCar, findCar };
+module.exports = { register, login, getCars, getUsers, addCar, findCar ,updateCarModel};

@@ -1,6 +1,6 @@
 const express = require("express")
 const {carModel,userModel} = require("./schema")
-const {register,login,getCars,getUsers,addCar,findCar}= require("./controller")
+const {register,login,getCars,getUsers,addCar,findCar,updateCarModel}= require("./controller")
 const middleWare = require("./middlewares")
 const bcrypt = require("bcrypt")
 const request  = require("express")
@@ -52,6 +52,8 @@ router.post("/add-car",middleWare,async (req,res)=>{
 router.get("/find-car-plate",async (req,res)=>{
     res.json(await findCar(req.body.plate))
 })
-
+router.post("/update",async(req,res)=>{
+    res.json(await updateCarModel(req.body))
+});
 
 module.exports = router
