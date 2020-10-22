@@ -71,6 +71,17 @@ router.put("/update-email", async (req, res) => {
       }
   ));
 });
+router.put("/update-password",async(req,res)=>{
+    const passwordHashed =await bcrypt.hash(req.body.password,process.env.salt)
+    const updatedPass = userModel.update(
+        {password:req.body.password},
+        {password:passwordHashed},
+        (err,result)=>{
+            if(err) throw err
+            console.log(result)
+        }
+    );
+});
 router.put("/update-car-color",async(req,res)=>{
     const update = await carModel.updateOne(
         {plate:req.body.plate},
@@ -104,5 +115,14 @@ router.put("/update-car-plate",async(req,res)=>{
     );
     res.json(update)
 });
-router.delete("/delete",async (req,res)=>{})
+router.delete("/delete",async (req,res)=>{
+    const toDelete = userModel.deleteOne(
+        {email:req.body.email},
+        (err,result)=>{
+            if(err) throw err
+            console.log(result)
+        }
+
+    )
+});
 module.exports = router;
