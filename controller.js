@@ -77,27 +77,18 @@ const login = async (loginInfo) => {
   }
 };
 const getCars = async function () {
-  //   carModel
-  //     .find({})
-  // .then((result) => {
-  //      console.log("RRRR", result);
-  // })
-  // .catch((err) => {
-  //   console.log("EEE", err);
-  //   });
   return await carModel.find({});
 };
-// console.log("AAAA", getCars());
-const updateCarModel = async (data) => {
-  await carModel.update(  
-    { U: data.oldData },
-    { New: data.newData },
-    (err, result) => {
-      if (err) throw err;
-      console.log("Update result :", result);
-    }
-  );
-};
+// const updateCarModel = async (data) => {
+//   const update = await carModel.update(
+//     { U: data.oldData },
+//     { New: data.newData },
+//     (err, result) => {
+//       if (err) throw err;
+//       console.log("Update result :", result);
+//     }
+//   );
+// };
 
 const getUsers = () => {
   return userModel.find({});
@@ -126,4 +117,11 @@ const findCar = async (plateNumber) => {
     plate: plateNumber,
   });
 };
-module.exports = { register, login, getCars, getUsers, addCar, findCar ,updateCarModel};
+module.exports = {
+  register,
+  login,
+  getCars,
+  getUsers,
+  addCar,
+  findCar,
+};
