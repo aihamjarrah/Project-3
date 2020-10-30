@@ -26,14 +26,16 @@ export default class App extends Component {
          console.log("Result",err)
        })
   }
-  addCar= ()=>{
+  addCar= (carInfo)=>{
     axios
          .post("http://localhost:3001/add-car")
          .then((response)=>{
            if(response.data ==="Login first"){
              this.setState({isLoggedIn:false})
            }
-           console.log("RESPONSE",response)
+           else{
+             this.setState({newCarInfo:carInfo})
+           }
 
   
          })
@@ -43,15 +45,20 @@ export default class App extends Component {
   
       
   }
-  onChange=(e)=>{
-    console.log(e.target)
-    
-  }
-  getInputText=()=>{
-      
-    this.addCar()
+  getInputText=(carInfo)=>{   
+    this.addCar(carInfo)
 
   }
+  onChange=(e)=>{
+    const carInfo = e.target.value
+    this.getInputText(carInfo)
+    
+
+    
+    
+  }
+
+  
   
     getAllUsers=()=>{
       axios
