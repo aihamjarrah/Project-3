@@ -94,7 +94,7 @@ export default class App extends Component {
             </ul>
           </nav>
           <Route exact path="/">
-            {this.state.isLoggedIn} ? <Home/> :<Home />
+            {this.state.isLoggedIn ? <Home/> :<Home />}
           </Route>
           <Route exact path="/cars">
             <Cars getCars={this.getAllCars} cars={this.state.cars} addCar={this.addCar}/>
@@ -103,7 +103,7 @@ export default class App extends Component {
             <About />
           </Route>
           <Route exact path="/add-car">
-            {this.state.isLoggedIn}? <AddCar getAllCars={this.getAllCars} addCar={this.addCar}/> :<p>You need to login in first</p>
+            {this.state.isLoggedIn? <AddCar getAllCars={this.getAllCars} addCar={this.addCar} onChange={this.onChange}/> :<p>You need to login in first</p>}
             
           </Route>
         </div>
