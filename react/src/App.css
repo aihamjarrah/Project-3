@@ -1,0 +1,23 @@
+.navBar{
+    list-style-type: none;
+    
+}
+.navBar li{
+    display: inline-block;
+}
+.addCar{
+    
+    
+}
+.app{
+    border:5px solid green
+}
+.cars{
+    border:5px solid yellow;
+}
+.home{
+    border: 5px solid black;
+}
+.about{
+    border: 5px solid hotpink;
+}
