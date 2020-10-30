@@ -10,7 +10,13 @@ export default class App extends Component {
   constructor(props){
     super(props);
     this.state={
-      isLoggedIn:false
+      isLoggedIn:false,
+      Color: "Black",
+      Plate: "12-93822",
+      type:"Mercedes",
+      engine:"2000cc",
+      model: "S200",
+      year:2017
       
 
     }
@@ -34,7 +40,7 @@ export default class App extends Component {
              this.setState({isLoggedIn:false})
            }
            else{
-             this.setState({newCarInfo:carInfo})
+             this.setState({:carInfo})
            }
 
   
@@ -45,13 +51,39 @@ export default class App extends Component {
   
       
   }
-  getInputText=(carInfo)=>{   
-    this.addCar(carInfo)
+  carColor=()=>{
+    const carInfo = this.onChange()
+    return carInfo
+
+  }
+  carPlate=()=>{
+    const carInfo = this.onChange()
+    return carInfo
+
+  }
+  carEngine=()=>{
+    const carInfo = this.onChange()
+    return carInfo
+
+  }
+  carType=()=>{
+    const carInfo = this.onChange()
+    return carInfo
+
+  }
+  carModel=()=>{
+    const carInfo = this.onChange()
+    return carInfo
+
+  }
+  carYear=()=>{
+    const carInfo = this.onChange()
+    return carInfo
 
   }
   onChange=(e)=>{
     const carInfo = e.target.value
-    this.getInputText(carInfo)
+    return carInfo
     
 
     
