@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import axios from "axios"
 export default class AddCar extends Component {
-  componentDidMount(){
-    console.log("THIS",this)
-    this.getAllCars()
-
-  }
+  
+  
   
   render() {
+    const {getAllCars,addCar} =this.props
     
     
 

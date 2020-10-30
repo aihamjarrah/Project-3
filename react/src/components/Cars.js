@@ -12,7 +12,6 @@ export default class Cars extends Component {
         <h1>Here you can find the car you need</h1>
         <Searchplate/>
         <Searchbycolor/>
-        <Addcar addCar={this.props.addCar}/>
         <button onClick={this.props.getCars}>All Cars</button>
       </div>
     );

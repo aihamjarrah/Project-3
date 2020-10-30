@@ -43,8 +43,9 @@ export default class App extends Component {
   
       
   }
-  onChange=()=>{
-    console.log()
+  onChange=(e)=>{
+    console.log(e.target)
+    
   }
   getInputText=()=>{
       
@@ -93,7 +94,7 @@ export default class App extends Component {
             </ul>
           </nav>
           <Route exact path="/">
-            <Home />
+            {this.state.isLoggedIn} ? <Home/> :<Home />
           </Route>
           <Route exact path="/cars">
             <Cars getCars={this.getAllCars} cars={this.state.cars} addCar={this.addCar}/>
@@ -102,7 +103,8 @@ export default class App extends Component {
             <About />
           </Route>
           <Route exact path="/add-car">
-            <AddCar/>
+            {this.state.isLoggedIn}? <AddCar getAllCars={this.getAllCars} addCar={this.addCar}/> :<p>You need to login in first</p>
+            
           </Route>
         </div>
       </Router>
